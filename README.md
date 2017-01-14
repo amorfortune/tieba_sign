@@ -5,4 +5,5 @@
 使用requests库
   使用前安装requests<br>
     pip install requests
-  <br>登陆后将cookie粘贴到代码对应位置即可.
+  <br>登陆后将cookie粘贴到代码对应位置即可.<br>
+ python 2.7.12
