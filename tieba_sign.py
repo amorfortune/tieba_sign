@@ -53,7 +53,7 @@ if __name__ == '__main__':
     session = GetSession(headers)
     url_base = 'http://tieba.baidu.com'
     url_pn = 'http://tieba.baidu.com/f/like/mylike?&pn='
-    pn = 4
+    pn = 1
     while True:
         url = url_pn + str(pn)
         pn += 1
