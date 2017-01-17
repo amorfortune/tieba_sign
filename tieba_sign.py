@@ -52,23 +52,33 @@ if __name__ == '__main__':
     }
     session = GetSession(headers)
     url_base = 'http://tieba.baidu.com'
-    url = 'http://tieba.baidu.com/f/like/mylike'
-    html = GetHtml(session, url)
-    pattern = '<a href="(.*?)" title=".*?">(.*?)</a>'
-    loves = GetFindall(pattern, html)
-    for love in loves:
-        url = url_base + love[0]
-        name = love[1]
-        sign = GetSign(session, url)
-        tie = name.encode('utf-8')
-        if sign == '': #贴吧被封
-            continue
-        if sign == '1':
-            print tie + '   已经签到了'
-            continue
-        elif sign == '0':
-            print tie + '   没有签到'
-            print tie + '   开始签到'
-            MakeSign(session, name)
-            print tie + '   签到完成！！！'
+    url_pn = 'http://tieba.baidu.com/f/like/mylike?&pn='
+    pn = 4
+    while True:
+        url = url_pn + str(pn)
+        pn += 1
+
+        html = GetHtml(session, url)
+        pattern = '<a href="(.*?)" title=".*?">(.*?)</a>'
+        loves = GetFindall(pattern, html)
+
+        if len(loves) == 0:
+            break
+
+        for love in loves:
+            url = url_base + love[0]
+            name = love[1]
+            sign = GetSign(session, url)
+            tie = name.encode('utf-8')
+            if sign == '': #贴吧被封
+                continue
+            if sign == '1':
+                print tie + '   已经签到了'
+                continue
+            elif sign == '0':
+                #time.sleep(2)
+                print tie + '   没有签到'
+                print tie + '   开始签到'
+                MakeSign(session, name)
+                print tie + '   签到完成！！！'
 
